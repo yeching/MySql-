@@ -1,0 +1,70 @@
+############################################################################
+目录：
+1.数据库语法
+2.mysql辅助命令
+############################################################################
+1.数据库语法
+-- Database-Level
+DROP DATABASE databaseName                 -- Delete the database (irrecoverable!)
+DROP DATABASE IF EXISTS databaseName       -- Delete if it exists
+CREATE DATABASE databaseName               -- Create a new database
+CREATE DATABASE IF NOT EXISTS databaseName -- Create only if it does not exists
+SHOW DATABASES                             -- Show all the databases in this server
+USE databaseName                           -- Set the default (current) database
+SELECT DATABASE()                          -- Show the default database
+SHOW CREATE DATABASE databaseName          -- Show the CREATE DATABASE statement
+-----------------------------------------------------------------------------------------------------------
+-- Table-Level
+DROP TABLE [IF EXISTS] tableName, ...
+CREATE TABLE [IF NOT EXISTS] tableName (
+   columnName columnType columnAttribute, ...
+   PRIMARY KEY(columnName),
+   FOREIGN KEY (columnNmae) REFERENCES tableName (columnNmae)
+)
+SHOW TABLES                -- Show all the tables in the default database
+DESCRIBE|DESC tableName    -- Describe the details for a table
+ALTER TABLE tableName ...  -- Modify a table, e.g., ADD COLUMN and DROP COLUMN
+ALTER TABLE tableName ADD columnDefinition
+ALTER TABLE tableName DROP columnName
+ALTER TABLE tableName ADD FOREIGN KEY (columnNmae) REFERENCES tableName (columnNmae)
+ALTER TABLE tableName DROP FOREIGN KEY constraintName
+SHOW CREATE TABLE tableName        -- Show the CREATE TABLE statement for this tableName
+-----------------------------------------------------------------------------------------------------------
+-- Row-Level
+INSERT INTO tableName 
+   VALUES (column1Value, column2Value,...)               -- Insert on all Columns
+INSERT INTO tableName 
+   VALUES (column1Value, column2Value,...), ...          -- Insert multiple rows
+INSERT INTO tableName (column1Name, ..., columnNName)
+   VALUES (column1Value, ..., columnNValue)              -- Insert on selected Columns
+DELETE FROM tableName WHERE criteria
+UPDATE tableName SET columnName = expr, ... WHERE criteria
+SELECT * | column1Name AS alias1, ..., columnNName AS aliasN 
+   FROM tableName
+   WHERE criteria
+   GROUP BY columnName
+   ORDER BY columnName ASC|DESC, ...
+   HAVING groupConstraints
+   LIMIT count | offset count
+----------------------------------------------------------------------------------------------------------- 
+-- Others
+SHOW WARNINGS;   -- Show the warnings of the previous statement
+############################################################################
+2.mysql辅助命令
+
+	SHOW CHARACTER SET;
+	show columns from table_name;
+	show create database db_name;
+	show create table table_name;
+	mysql> CREATE DATABASE db_name DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+	mysql> show variables like '%character%';
+	mysql> SELECT VERSION(), CURRENT_DATE;	要求服务器告诉它的版本号和当前日期
+	mysql> select user(),current_date;
+	mysql> SHOW ENGINES;
+	SELECT DATABASE();
+    USE 数据库名 :选择要操作的Mysql数据库，使用该命令后所有Mysql命令都只针对该数据库。
+    SHOW DATABASES: 列出 MySQL 数据库管理系统的数据库列表。
+    SHOW TABLES: 显示指定数据库的所有表，使用该命令前需要使用 use 命令来选择要操作的数据库。
+    SHOW COLUMNS FROM 数据表: 显示数据表的属性，属性类型，主键信息 ，是否为 NULL，默认值等其他信息。
+    SHOW INDEX FROM 数据表: 显示数据表的详细索引信息，包括PRIMARY KEY（主键）。
+    SHOW TABLE STATUS LIKE 数据表\G: 该命令将输出Mysql数据库管理系统的性能及统计信息。
